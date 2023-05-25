@@ -1,2 +1,4 @@
 Faker
 kafka-python
+ipykernel
+requests

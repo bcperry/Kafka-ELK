@@ -14,7 +14,9 @@ def get_location():
         },
         "city": loc[2],
         'country': loc[3],
-        "region": loc[4]
+        "region": loc[4],
+        "aircraft": "AH-64",
+        "rad_alt": fake.random_int(min=30000, max=35000)
     }
 
 def json_serializer(data):
