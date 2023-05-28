@@ -26,6 +26,7 @@ producer = KafkaProducer(bootstrap_servers=['192.168.86.103:9092'],
                          value_serializer=json_serializer)
 
 if __name__ == "__main__":
+    
     while True:
         location = get_location()
         print(location)
