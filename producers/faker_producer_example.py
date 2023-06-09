@@ -3,6 +3,12 @@ from kafka import KafkaProducer
 import json
 import time
 
+from dotenv import load_dotenv
+import os 
+
+env = load_dotenv(dotenv_path='.env')
+SERVER = os.getenv('SERVER')
+
 fake = Faker()
 
 def get_location():
@@ -22,7 +28,7 @@ def get_location():
 def json_serializer(data):
     return json.dumps(data).encode("utf-8")
 
-producer = KafkaProducer(bootstrap_servers=['192.168.86.103:9092'],
+producer = KafkaProducer(bootstrap_servers=[SERVER + ':9092'],
                          value_serializer=json_serializer)
 
 if __name__ == "__main__":

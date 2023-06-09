@@ -5,3 +5,4 @@ requests
 signalr-async==3.0.0
 typing_extensions==4.1.1
 zlib-state
+python-dotenv
