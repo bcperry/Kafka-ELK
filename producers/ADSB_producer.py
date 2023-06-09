@@ -18,8 +18,10 @@ def get_ac_info(time, state):
         'origin_country': state[2],
         'time_position': state[3],
         'last_contact': state[4],
-        'longitude': state[5],
-        'latitude': state[6],
+        'geo_point':{
+            'lon': state[5],
+            'lat': state[6]
+            },
         'baro_altitude': state[7],
         'on_ground': state[8],
         'velocity': state[9],
