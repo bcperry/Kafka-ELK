@@ -1,17 +1,20 @@
-from kafka import KafkaProducer
+'''Module for creating a Kafka procuder for ADSB information'''
 import json
 import time
+import os
+from kafka import KafkaProducer
 import requests
 
 from dotenv import load_dotenv
-import os 
+
 
 load_dotenv(dotenv_path='.env')
 SERVER = os.getenv('SERVER')
 
-url = "https://opensky-network.org/api/states/all"
+URL = "https://opensky-network.org/api/states/all"
 
-def get_ac_info(time, state):
+def get_ac_info(state: list):
+    '''Takes the state list and returns a dictionary containing the information'''
     return {
         'icao24': state[0],
         'callsign': state[1],
@@ -34,18 +37,19 @@ def get_ac_info(time, state):
 
     }
 
-def json_serializer(data):
-    return json.dumps(data).encode("utf-8")
+
+def json_serializer(data_dict: dict) -> dict:
+    '''takes a dictionary and returns a a json serializer'''
+    return json.dumps(data_dict).encode("utf-8")
 
 producer = KafkaProducer(bootstrap_servers=[SERVER + ':9092'],
                          value_serializer=json_serializer)
 
 if __name__ == "__main__":
     while True:
-        response = requests.get(url)
+        response = requests.get(URL, timeout=10)
 
-        t = response.json()['time']
         for data in response.json()['states']:
-            producer.send("adsb", get_ac_info(t, data))
+            producer.send("adsb", get_ac_info(data))
         print('data received')
         time.sleep(30)
